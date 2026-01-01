@@ -1,0 +1,7 @@
+{
+  "name": "Élever Manager",
+  "description": "Premium preschool and daycare management software for Élever Day Care & Preschool, featuring attendance tracking and AI parent communication.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
