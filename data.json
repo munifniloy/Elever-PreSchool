@@ -1,0 +1,38 @@
+{
+  "students": [
+    {
+      "id": "EL-1001",
+      "name": "Zidan Rahman",
+      "ageGroup": "Toddler",
+      "guardian": "Fatema Rahman",
+      "phone": "01700000000",
+      "status": "Out",
+      "logs": []
+    },
+    {
+      "id": "EL-1002",
+      "name": "Saira Khan",
+      "ageGroup": "Preschooler",
+      "guardian": "Imran Khan",
+      "phone": "01800000000",
+      "status": "Out",
+      "logs": []
+    }
+  ],
+  "employees": [
+    {
+      "id": "STAFF-01",
+      "name": "Ms. Tania Ahmed",
+      "role": "Lead Teacher",
+      "status": "Out",
+      "logs": []
+    },
+    {
+      "id": "STAFF-02",
+      "name": "Mr. Kabir Hossain",
+      "role": "Security/Admin",
+      "status": "Out",
+      "logs": []
+    }
+  ]
+}

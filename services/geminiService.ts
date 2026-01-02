@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Student } from "../types";
+import { Student } from "../types.ts";
 
 export const generateDailySummary = async (student: Student): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });

@@ -1,6 +1,5 @@
-
 import React, { useState, useRef } from 'react';
-import { Employee, AttendanceStatus, EmployeeRole } from '../types';
+import { Employee, AttendanceStatus, EmployeeRole } from '../types.ts';
 
 interface ImagePickerProps {
   value: string;
@@ -146,7 +145,7 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onToggleAttendan
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {employees.map(employee => (
-          <div key={employee.id} className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 relative group overflow-hidden">
+          <div key={employee.id} className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 relative overflow-hidden flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
                 <img src={employee.photoUrl || 'https://via.placeholder.com/150'} className="w-14 h-14 rounded-2xl object-cover shadow-sm border-2 border-[#f1f7f5]" />
@@ -159,16 +158,18 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onToggleAttendan
                   </span>
                 </div>
               </div>
+              
+              {/* CLEARLY VISIBLE DELETE BUTTON FOR STAFF */}
               <button 
                 onClick={() => onDeleteEmployee(employee.id)}
-                className="w-10 h-10 flex items-center justify-center bg-red-50 text-red-600 rounded-full hover:bg-red-600 hover:text-white transition-all shadow-md active:scale-95"
-                title="Delete Employee"
+                className="p-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm border border-red-100"
+                title="Remove Staff Member"
               >
                 🗑️
               </button>
             </div>
 
-            <div className="space-y-2 mb-6 text-sm text-gray-500">
+            <div className="space-y-2 mb-6 text-sm text-gray-500 flex-1">
               <p>📞 {employee.phone}</p>
               <p className="truncate">🎓 {employee.qualification || 'No qualification listed'}</p>
               <p className="text-[10px] text-gray-400 font-medium truncate">📍 {employee.address || 'No address'}</p>
@@ -198,7 +199,7 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onToggleAttendan
                   : 'bg-[#41618B] text-white hover:bg-[#344e70] shadow-lg shadow-[#41618B]/20'
               }`}
             >
-              {employee.status === AttendanceStatus.IN ? 'Clock Out' : 'Clock In'}
+              {employee.status === AttendanceStatus.IN ? 'Clock Out 👋' : 'Clock In ✅'}
             </button>
           </div>
         ))}
@@ -207,7 +208,10 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onToggleAttendan
       {isAdding && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-[70] flex items-center justify-center p-4">
           <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg p-8 animate-in zoom-in-95 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Staff Registration</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Staff Registration</h2>
+              <button onClick={() => setIsAdding(false)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>

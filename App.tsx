@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Student, AttendanceStatus, AgeGroup, Employee } from './types';
-import { INITIAL_STUDENTS, INITIAL_EMPLOYEES, APP_LOGO } from './constants';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import AttendanceList from './components/AttendanceList';
-import EmployeeList from './components/EmployeeList';
-import Reports from './components/Reports';
-import StudentProfile from './components/StudentProfile';
-import Login from './components/Login';
+import { Student, AttendanceStatus, Employee } from './types.ts';
+import { INITIAL_STUDENTS, INITIAL_EMPLOYEES, APP_LOGO } from './constants.ts';
+import Sidebar from './components/Sidebar.tsx';
+import Dashboard from './components/Dashboard.tsx';
+import AttendanceList from './components/AttendanceList.tsx';
+import EmployeeList from './components/EmployeeList.tsx';
+import Reports from './components/Reports.tsx';
+import StudentProfile from './components/StudentProfile.tsx';
+import Login from './components/Login.tsx';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
@@ -99,14 +99,14 @@ const App: React.FC = () => {
   };
 
   const handleDeleteStudent = (id: string) => {
-    if (confirm("Are you sure you want to remove this student from Élever? This action cannot be undone.")) {
+    if (confirm("Are you sure you want to PERMANENTLY remove this student profile?")) {
       setStudents(prev => prev.filter(s => s.id !== id));
-      setSelectedStudentId(null);
+      if (selectedStudentId === id) setSelectedStudentId(null);
     }
   };
 
   const handleDeleteEmployee = (id: string) => {
-    if (confirm("Are you sure you want to remove this staff member?")) {
+    if (confirm("Are you sure you want to PERMANENTLY remove this staff member?")) {
       setEmployees(prev => prev.filter(e => e.id !== id));
     }
   };
@@ -118,55 +118,55 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#f8faf9]">
-      <Sidebar activeTab={activeTab as any} setActiveTab={setActiveTab as any} onLogout={handleLogout} />
+    <div className="flex min-h-screen bg-[#f8faf9] text-[#1e293b]">
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />
       
-      <main className="flex-1 overflow-y-auto p-4 md:p-8">
-        <header className="mb-8 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img src={APP_LOGO} alt="Élever Logo" className="w-12 h-12 object-contain" />
+      <main className="flex-1 overflow-y-auto p-4 md:p-10 custom-scrollbar">
+        <header className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center space-x-5">
+            <img src={APP_LOGO} alt="Élever Logo" className="w-16 h-16 rounded-2xl object-cover shadow-lg border-2 border-white" />
             <div>
-              <h1 className="text-3xl font-bold text-[#41618B]">Élever Day Care & Preschool</h1>
-              <p className="text-gray-500 font-medium text-sm">Managing growth and excellence since {new Date().getFullYear()}.</p>
+              <h1 className="text-3xl font-bold text-[#41618B] tracking-tight">Élever</h1>
+              <p className="text-gray-400 font-medium text-sm">Day Care & Preschool Management</p>
             </div>
           </div>
-          <div className="hidden md:block">
-            <div className="bg-[#f1f7f5] px-4 py-2 rounded-2xl border border-[#dbece5] flex items-center space-x-2">
-              <span className="w-2 h-2 bg-[#98D2B9] rounded-full animate-pulse"></span>
-              <span className="text-xs font-bold text-[#67A08B] uppercase tracking-wider">Admin Active</span>
-            </div>
+          <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-2xl shadow-sm border border-gray-100">
+             <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+             <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Live System Active</span>
           </div>
         </header>
 
-        {activeTab === 'dashboard' && (
-          <Dashboard 
-            students={students} 
-            onSelectStudent={(id) => setSelectedStudentId(id)} 
-          />
-        )}
+        <div className="animate-fade">
+          {activeTab === 'dashboard' && (
+            <Dashboard 
+              students={students} 
+              onSelectStudent={(id) => setSelectedStudentId(id)} 
+            />
+          )}
 
-        {activeTab === 'attendance' && (
-          <AttendanceList 
-            students={students} 
-            onToggleAttendance={handleToggleAttendance}
-            onSelectStudent={(id) => setSelectedStudentId(id)}
-            onAddStudent={handleAddStudent}
-            onDeleteStudent={handleDeleteStudent}
-          />
-        )}
+          {activeTab === 'attendance' && (
+            <AttendanceList 
+              students={students} 
+              onToggleAttendance={handleToggleAttendance}
+              onSelectStudent={(id) => setSelectedStudentId(id)}
+              onAddStudent={handleAddStudent}
+              onDeleteStudent={handleDeleteStudent}
+            />
+          )}
 
-        {activeTab === 'employees' && (
-          <EmployeeList 
-            employees={employees}
-            onToggleAttendance={handleToggleEmployeeAttendance}
-            onAddEmployee={handleAddEmployee}
-            onDeleteEmployee={handleDeleteEmployee}
-          />
-        )}
+          {activeTab === 'employees' && (
+            <EmployeeList 
+              employees={employees}
+              onToggleAttendance={handleToggleEmployeeAttendance}
+              onAddEmployee={handleAddEmployee}
+              onDeleteEmployee={handleDeleteEmployee}
+            />
+          )}
 
-        {activeTab === 'reports' && (
-          <Reports students={students} employees={employees} />
-        )}
+          {activeTab === 'reports' && (
+            <Reports students={students} employees={employees} />
+          )}
+        </div>
 
         {selectedStudent && (
           <StudentProfile 

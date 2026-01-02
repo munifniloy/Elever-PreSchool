@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Student, AttendanceStatus, Employee } from '../types';
+import { Student, AttendanceStatus, Employee } from '../types.ts';
 
 interface ReportsProps {
   students: Student[];
