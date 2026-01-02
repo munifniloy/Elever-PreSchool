@@ -1,8 +1,8 @@
-
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { Student } from "../types.ts";
 
 export const generateDailySummary = async (student: Student): Promise<string> => {
+  // Initializing inside the function ensures the API key is retrieved correctly from the environment
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const inLog = student.logs.find(l => l.type === 'In');
